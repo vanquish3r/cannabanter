@@ -29,7 +29,7 @@ BS.BanterScene.GetInstance().On("loaded", () => {
   /* UNCOMMENTED THIS TO ENABLE THE KARAOKE PLAYER */
 		// enableKaraokePlayer();
 	/* UNCOMMENTED THIS TO ENABLE FIRE TABLET */
-		 enableThePortableFireScreen();
+		// enableThePortableFireScreen();
 });
 
 // videoplayer toggle by HBR & FireRat
