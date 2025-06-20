@@ -13,7 +13,8 @@ CannaTest PLzgofGqYK8u6AlSuAxhkaYzgkWBvDupWR
 /* Fire Embed - https://cannabanter.firer.at/embed.html?21 */
 
 let youtubePlaylist = `PLZWiw-xxQ4SPDmADhvme7-pU2bx3s7nKX`;
-let otherwebsiteurl = "https://firer.at/pages/games.html";  // Small Screen Up Stairs
+let otherwebsiteurl = "https://www.youtube.com/playlist?list=PLgaFNC_I_ZklXd_bvyiLyQAKlwaUMoMdR";  // Small Screen Up Stairs
+// let otherwebsiteurl = "https://firer.at/pages/games.html";  // Small Screen Up Stairs
 
 /* TOGGLE FOR YOUTUBE LIVE OR SCREENCAST */
 /* DO NOT CHANGE THESE LINKS, only comment out line 16 or 17 */
