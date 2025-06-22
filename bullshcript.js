@@ -13,8 +13,8 @@ CannaTest PLzgofGqYK8u6AlSuAxhkaYzgkWBvDupWR
 /* Fire Embed - https://cannabanter.firer.at/embed.html?21 */
 
 let youtubePlaylist = `PLZWiw-xxQ4SPDmADhvme7-pU2bx3s7nKX`;
-let otherwebsiteurl = "https://www.youtube.com/playlist?list=PLgaFNC_I_ZklXd_bvyiLyQAKlwaUMoMdR";  // Small Screen Up Stairs
-// let otherwebsiteurl = "https://firer.at/pages/games.html";  // Small Screen Up Stairs
+// let otherwebsiteurl = "https://www.youtube.com/playlist?list=PLgaFNC_I_ZklXd_bvyiLyQAKlwaUMoMdR";  // Small Screen Up Stairs
+let otherwebsiteurl = "https://firer.at/pages/games.html";  // Small Screen Up Stairs
 
 /* TOGGLE FOR YOUTUBE LIVE OR SCREENCAST */
 /* DO NOT CHANGE THESE LINKS, only comment out line 16 or 17 */
@@ -53,7 +53,8 @@ let ytplayerdisabled = true;
 		// videoplayer.setAttribute("spatial-max-distance", "500");
 		videoplayer.setAttribute("playlist", "PLZWiw-xxQ4SPDmADhvme7-pU2bx3s7nKX");
 		videoplayer.setAttribute("announce", "false");
-		// videoplayer.setAttribute("announce-four-twenty", "false");
+		videoplayer.setAttribute("announce-events", "false");
+		videoplayer.setAttribute("announce-four-twenty", "false");
 		videoplayer.setAttribute("data-playlist-icon-url", "https://cdn.glitch.global/47f0acb4-4420-4f3f-bb01-dba17f8c0edb/Playlist.png?v=1711786451727");
 		videoplayer.setAttribute("data-vol-up-icon-url", "https://cdn.glitch.global/47f0acb4-4420-4f3f-bb01-dba17f8c0edb/Vol_Up.png?v=1711785431096");
 		videoplayer.setAttribute("data-vol-down-icon-url", "https://cdn.glitch.global/47f0acb4-4420-4f3f-bb01-dba17f8c0edb/Vol_Dn.png?v=1711785430202");
@@ -135,6 +136,7 @@ let karaokeplayerdisabled = true;
 		videoplayer.setAttribute("playlist", "");
 		videoplayer.setAttribute("announce", "false");
 	  	videoplayer.setAttribute("announce-events", "false");
+	  	videoplayer.setAttribute("announce-four-twenty", "false");
 		// videoplayer.setAttribute("data-playlist-icon-url", "https://cdn.glitch.global/69f02c8f-d538-43b7-9c66-5d3973208d79/Playlist.png?v=1713028119937");
 		// videoplayer.setAttribute("data-vol-up-icon-url", "https://cdn.glitch.global/69f02c8f-d538-43b7-9c66-5d3973208d79/VolUp.png?v=1713028119640");
 		// videoplayer.setAttribute("data-vol-down-icon-url", "https://cdn.glitch.global/69f02c8f-d538-43b7-9c66-5d3973208d79/VolDown.png?v=1713028119279");
@@ -161,13 +163,13 @@ function enableThePortableFireScreen() {
 	firescreen.setAttribute("pixelsperunit", "1300");
 	firescreen.setAttribute("width", "1280");
 	firescreen.setAttribute("height", "720");
-	firescreen.setAttribute("announce", "false");
+	firescreen.setAttribute("announce", "true");
 	firescreen.setAttribute("announce-events", "true");
-  firescreen.setAttribute("announce-420", "true");
+  	firescreen.setAttribute("announce-420", "true");
 	firescreen.setAttribute("volume", "0.25");
-  firescreen.setAttribute("backdrop", "true");
+  	firescreen.setAttribute("backdrop", "true");
 	firescreen.setAttribute("hand-controls", "true");
-  // firescreen.setAttribute("disable-rotation", "false");
+  	// firescreen.setAttribute("disable-rotation", "false");
 	firescreen.setAttribute("custom-button01-url", "https://jackbox.tv");
 	firescreen.setAttribute("custom-button01-text", "Jackbox.tv");
 	firescreen.setAttribute("custom-button02-url", "https://papas.tv");
