@@ -127,7 +127,7 @@ let karaokeplayerdisabled = true;
 		videoplayer.setAttribute("rotation", "0 0 0");
 		videoplayer.setAttribute("position", "0 -3 8");
 		videoplayer.setAttribute("hand-controls", "true");
-		videoplayer.setAttribute("button-position", "-2.815 6.5775 15.3");
+		videoplayer.setAttribute("button-position", "-2.715 6.5775 15.3");
 		videoplayer.setAttribute("volume", "15");
 		videoplayer.setAttribute("button-rotation", "0 90 0");
 		videoplayer.setAttribute("button-scale", "0.7 0.7 0.7");
