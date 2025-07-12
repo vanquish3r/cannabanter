@@ -33,12 +33,14 @@ BS.BanterScene.GetInstance().On("loaded", () => {
 		// enableThePortableFireScreen();
 });
 
+let screenstuffDisabled = true;
+
 // videoplayer toggle by HBR & FireRat
 let ytplayerdisabled = true;
   async function enableYouTube() {
 	  // If Browser already exists, DESTROY IT!
-	  var browser = await BS.BanterScene.GetInstance().Find('MainParentObject1');
-	  if (browser) { browser.Destroy(); }
+	  var browser = await BS.BanterScene.GetInstance().Find('MainParentObject2');
+	  if (browser) { browser.Destroy(); screenstuffDisabled = true; }
 	  // If Karaoke Player exists, Destroy it!
 	  let delayYT = false;
 		if (window.karaokePlayerInstance) { delayYT = true; window.cleanupVideoPlayer(); }
@@ -76,50 +78,51 @@ let ytplayerdisabled = true;
 };
 
 // Fire Screen Toggle
-let screenstuffDisabled = true;
 function enableTheFireScreen() {
 	  // If Karaoke Player exists, Destroy it!
 		if (window.karaokePlayerInstance) { window.cleanupVideoPlayer(); }
 	  // If YouTube Player exists, Destroy it!
 		if (window.playlistPlayerInstance) { window.cleanupVideoPlayer(); }
-  if (screenstuffDisabled){
-		screenstuffDisabled = false;
-		console.log("Adding Screen Cast");
-		const firescreen = document.createElement("script");
-		firescreen.id = "cannabanter-firescreen";
-		firescreen.setAttribute("scale", "1 1 1");
-		firescreen.setAttribute("rotation", "0 180 0");
-		firescreen.setAttribute("screen-rotation", "0 180 0");
-		firescreen.setAttribute("screen-scale", "0.515 0.515 1");
-		firescreen.setAttribute("position", "0 0.1 -29");
-		firescreen.setAttribute("lock-position", "true");
-		firescreen.setAttribute("mipmaps", "0");
-		firescreen.setAttribute("pixelsperunit", "1600");
-		firescreen.setAttribute("castmode", "true");
-		firescreen.setAttribute("backdrop", "false");
-		firescreen.setAttribute("disable-rotation", "true");
-		firescreen.setAttribute("hand-controls", "false");
-		firescreen.setAttribute("announce", "false");
-		firescreen.setAttribute("announce-events", "false");
-		firescreen.setAttribute("announce-420", "false");
-		firescreen.setAttribute("volume", "0.2");
-		firescreen.setAttribute("width", "1920");
-		firescreen.setAttribute("height", "1080");
-		firescreen.setAttribute("screen-position", "0 -3.1 -21");
-		firescreen.setAttribute("website", websiteurl);
-		firescreen.setAttribute("src", "https://firer.at/scripts/firescreenv2.js");
-		document.querySelector("a-scene").appendChild(firescreen);
-		if (websiteurl.includes("hyperbeam.com/i/")) {
-			setTimeout(async () => { 
-				let theBrowserthingy = await cannascene.Find(`MyBrowser2`);
-				let thebrowserpart = theBrowserthingy.GetComponent(BS.ComponentType.BanterBrowser);
-				thebrowserpart.RunActions(JSON.stringify({"actions": [{ "actionType": "runscript","strparam1": "const checkbox = document.querySelector(`.p-checkbox-box[role='checkbox']`); const joinButton = document.querySelector('.footer_3Yiou .joinBtn_1TAU6'); if (checkbox) checkbox.click(); if (joinButton) { const observer = new MutationObserver(() => { if (!joinButton.classList.contains('p-disabled')) { joinButton.click(); observer.disconnect(); setTimeout(() => { const skipButton = document.querySelector('.dialog-secondary-btn'); if (skipButton) skipButton.click(); }, 3000); } }); observer.observe(joinButton, { attributes: true, attributeFilter: ['class'] }); }" }]}));
-				setTimeout(async () => {
-					thebrowserpart.RunActions(JSON.stringify({"actions": [{ "actionType": "runscript","strparam1": "var fullscreenButton = document.querySelector(`.p-button.p-component.tu-button.btn-tertiary.btn_2YRyp svg path[d^='M3 3h6.429']`); if (fullscreenButton) { fullscreenButton.closest('button').click(); } setTimeout(async () => { var chatButton = document.querySelector(`.p-button.p-component.tu-button.btn-tertiary.fsChatBtn_2cCyy svg path[d^='M22 22h-2V2h2v20zM2 11h12.17']`); if (chatButton) { chatButton.closest('button').click(); } }, 3500);" }]}));
-				}, 5000);
-			}, 3000);
+   setTimeout(() => { 
+		if (screenstuffDisabled){
+			screenstuffDisabled = false;
+			console.log("Adding Screen Cast");
+			const firescreen = document.createElement("script");
+			firescreen.id = "cannabanter-firescreen";
+			firescreen.setAttribute("scale", "1 1 1");
+			firescreen.setAttribute("rotation", "0 180 0");
+			firescreen.setAttribute("screen-rotation", "0 180 0");
+			firescreen.setAttribute("screen-scale", "0.515 0.515 1");
+			firescreen.setAttribute("position", "0 0.1 -29");
+			firescreen.setAttribute("lock-position", "true");
+			firescreen.setAttribute("mipmaps", "0");
+			firescreen.setAttribute("pixelsperunit", "1600");
+			firescreen.setAttribute("castmode", "true");
+			firescreen.setAttribute("backdrop", "false");
+			firescreen.setAttribute("disable-rotation", "true");
+			firescreen.setAttribute("hand-controls", "false");
+			firescreen.setAttribute("announce", "false");
+			firescreen.setAttribute("announce-events", "false");
+			firescreen.setAttribute("announce-420", "false");
+			firescreen.setAttribute("volume", "0.2");
+			firescreen.setAttribute("width", "1920");
+			firescreen.setAttribute("height", "1080");
+			firescreen.setAttribute("screen-position", "0 -3.1 -21");
+			firescreen.setAttribute("website", websiteurl);
+			firescreen.setAttribute("src", "https://firer.at/scripts/firescreenv2.js");
+			document.querySelector("a-scene").appendChild(firescreen);
+			if (websiteurl.includes("hyperbeam.com/i/")) {
+				setTimeout(async () => { 
+					let theBrowserthingy = await cannascene.Find(`MyBrowser2`);
+					let thebrowserpart = theBrowserthingy.GetComponent(BS.ComponentType.BanterBrowser);
+					thebrowserpart.RunActions(JSON.stringify({"actions": [{ "actionType": "runscript","strparam1": "const checkbox = document.querySelector(`.p-checkbox-box[role='checkbox']`); const joinButton = document.querySelector('.footer_3Yiou .joinBtn_1TAU6'); if (checkbox) checkbox.click(); if (joinButton) { const observer = new MutationObserver(() => { if (!joinButton.classList.contains('p-disabled')) { joinButton.click(); observer.disconnect(); setTimeout(() => { const skipButton = document.querySelector('.dialog-secondary-btn'); if (skipButton) skipButton.click(); }, 3000); } }); observer.observe(joinButton, { attributes: true, attributeFilter: ['class'] }); }" }]}));
+					setTimeout(async () => {
+						thebrowserpart.RunActions(JSON.stringify({"actions": [{ "actionType": "runscript","strparam1": "var fullscreenButton = document.querySelector(`.p-button.p-component.tu-button.btn-tertiary.btn_2YRyp svg path[d^='M3 3h6.429']`); if (fullscreenButton) { fullscreenButton.closest('button').click(); } setTimeout(async () => { var chatButton = document.querySelector(`.p-button.p-component.tu-button.btn-tertiary.fsChatBtn_2cCyy svg path[d^='M22 22h-2V2h2v20zM2 11h12.17']`); if (chatButton) { chatButton.closest('button').click(); } }, 3500);" }]}));
+					}, 5000);
+				}, 3000);
+			}
 		}
-  }
+   }, 3000); 
 	console.log("Screen Stuff enabled: " + screenstuffDisabled);
 };
 
@@ -127,8 +130,8 @@ function enableTheFireScreen() {
 let karaokeplayerdisabled = true;
   async function enableKaraokePlayer() {
 	  // If Browser already exists, DESTROY IT!
-	  var browser = await BS.BanterScene.GetInstance().Find('MainParentObject1');
-	  if (browser) { browser.Destroy(); }
+	  var browser = await BS.BanterScene.GetInstance().Find('MainParentObject2');
+	  if (browser) { browser.Destroy(); screenstuffDisabled = true; }
 	  // If YouTube Player exists, Destroy it!
 	  let delayYT = false;
 		if (window.playlistPlayerInstance) { delayYT = true; window.cleanupVideoPlayer(); }
@@ -202,7 +205,7 @@ function enableThePortableFireScreen() {
 	firescreen.setAttribute("website", otherwebsiteurl);
 	firescreen.setAttribute("src", "https://firer.at/scripts/firescreenv2.js");
 	document.querySelector("a-scene").appendChild(firescreen);
-   }, 5000); 
+   }, 1000); 
   }
     console.log("Fire Tablet enabled");
 
