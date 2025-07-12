@@ -35,7 +35,7 @@ BS.BanterScene.GetInstance().On("loaded", () => {
 
 // videoplayer toggle by HBR & FireRat
 let ytplayerdisabled = true;
-  function enableYouTube() {
+  async function enableYouTube() {
 	  // If Browser already exists, DESTROY IT!
 	  const browser = await BS.BanterScene.GetInstance().Find('MyBrowser1');
 	  if (browser) { browser.Destroy(); }
