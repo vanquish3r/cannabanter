@@ -78,6 +78,10 @@ let ytplayerdisabled = true;
 // Fire Screen Toggle
 let screenstuffDisabled = true;
 function enableTheFireScreen() {
+	  // If Karaoke Player exists, Destroy it!
+		if (window.karaokePlayerInstance) { window.cleanupVideoPlayer(); }
+	  // If YouTube Player exists, Destroy it!
+		if (window.playlistPlayerInstance) { window.cleanupVideoPlayer(); }
   if (screenstuffDisabled){
 		screenstuffDisabled = false;
 		console.log("Adding Screen Cast");
@@ -125,7 +129,7 @@ let karaokeplayerdisabled = true;
 	  // If Browser already exists, DESTROY IT!
 	  const browser = await BS.BanterScene.GetInstance().Find('MyBrowser1');
 	  if (browser) { browser.Destroy(); }
-	  // If Karaoke Player exists, Destroy it!
+	  // If YouTube Player exists, Destroy it!
 	  let delayYT = false;
 		if (window.playlistPlayerInstance) { delayYT = true; window.cleanupVideoPlayer(); }
   if (karaokeplayerdisabled){
