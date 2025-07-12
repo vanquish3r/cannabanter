@@ -37,7 +37,7 @@ BS.BanterScene.GetInstance().On("loaded", () => {
 let ytplayerdisabled = true;
   async function enableYouTube() {
 	  // If Browser already exists, DESTROY IT!
-	  const browser = await BS.BanterScene.GetInstance().Find('MyBrowser1');
+	  var browser = await BS.BanterScene.GetInstance().Find('MainParentObject1');
 	  if (browser) { browser.Destroy(); }
 	  // If Karaoke Player exists, Destroy it!
 	  let delayYT = false;
@@ -127,7 +127,7 @@ function enableTheFireScreen() {
 let karaokeplayerdisabled = true;
   async function enableKaraokePlayer() {
 	  // If Browser already exists, DESTROY IT!
-	  const browser = await BS.BanterScene.GetInstance().Find('MyBrowser1');
+	  var browser = await BS.BanterScene.GetInstance().Find('MainParentObject1');
 	  if (browser) { browser.Destroy(); }
 	  // If YouTube Player exists, Destroy it!
 	  let delayYT = false;
