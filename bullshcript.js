@@ -42,7 +42,7 @@ let screenstuffDisabled = true;
   async function enableYouTube() {
 	  // If Browser already exists, DESTROY IT!
 	  var browser = await BS.BanterScene.GetInstance().Find('MainParentObject2');
-	  if (browser) { console.log("Browser2 Found, Removing it!"); browser.Destroy(); screenstuffDisabled = true; }
+	  if (browser) { console.log("Browser2 Found, Removing it!"); cleanupFireScreenV2(2); screenstuffDisabled = true; }
 	  // If Karaoke Player exists, Destroy it!
 	  let delayYT = false;
 		if (window.karaokePlayerInstance) { delayYT = true; karaokeplayerdisabled = true; console.log("Karaoke Player exists, Destroying it!"); window.cleanupVideoPlayer(); }
@@ -131,7 +131,7 @@ function enableTheFireScreen() {
   async function enableKaraokePlayer() {
 	  // If Browser already exists, DESTROY IT!
 	  var browser = await BS.BanterScene.GetInstance().Find('MainParentObject2');
-	  if (browser) { console.log("Browser2 Found, Removing it!"); browser.Destroy(); screenstuffDisabled = true; }
+	  if (browser) { console.log("Browser2 Found, Removing it!"); cleanupFireScreenV2(2); screenstuffDisabled = true; }
 	  // If YouTube Player exists, Destroy it!
 	  let delayYT = false;
 		if (window.playlistPlayerInstance) { delayYT = true; ytplayerdisabled = true; console.log("YouTube Player exists, Destroying it!"); window.cleanupVideoPlayer(); }
