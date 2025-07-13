@@ -175,7 +175,7 @@ function enableTheFireScreen() {
 let screenPortableDisabled = true;
 function enableThePortableFireScreen() {
   if (screenPortableDisabled){ screenPortableDisabled = false;
-   setTimeout(() => { 
+  //  setTimeout(() => { 
 	console.log("Adding Fire Tablet");
 	const firescreen = document.createElement("script");
 	firescreen.id = "cannabanter-firetablet";
@@ -204,7 +204,7 @@ function enableThePortableFireScreen() {
 	firescreen.setAttribute("website", otherwebsiteurl);
 	firescreen.setAttribute("src", "https://firer.at/scripts/firescreenv2.js");
 	document.querySelector("a-scene").appendChild(firescreen);
-   }, 1000); 
+  //  }, 1000); 
   }
     console.log("Fire Tablet enabled");
 
