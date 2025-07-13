@@ -33,17 +33,18 @@ BS.BanterScene.GetInstance().On("loaded", () => {
 		// enableThePortableFireScreen();
 });
 
+// Player Toggle's by HBR & FireRat
+let ytplayerdisabled = true;
+let karaokeplayerdisabled = true;
 let screenstuffDisabled = true;
 
-// videoplayer toggle by HBR & FireRat
-let ytplayerdisabled = true;
   async function enableYouTube() {
 	  // If Browser already exists, DESTROY IT!
 	  var browser = await BS.BanterScene.GetInstance().Find('MainParentObject2');
 	  if (browser) { console.log("Browser2 Found, Removing it!"); browser.Destroy(); screenstuffDisabled = true; }
 	  // If Karaoke Player exists, Destroy it!
 	  let delayYT = false;
-		if (window.karaokePlayerInstance) { delayYT = true; console.log("Karaoke Player exists, Destroying it!"); window.cleanupVideoPlayer(); }
+		if (window.karaokePlayerInstance) { delayYT = true; karaokeplayerdisabled = true; console.log("Karaoke Player exists, Destroying it!"); window.cleanupVideoPlayer(); }
   if (ytplayerdisabled){ ytplayerdisabled = false;
 		setTimeout(() => {  
 			console.log("YouTube Player Loading");
@@ -80,9 +81,9 @@ let ytplayerdisabled = true;
 // Fire Screen Toggle
 function enableTheFireScreen() {
 	  // If Karaoke Player exists, Destroy it!
-		if (window.karaokePlayerInstance) { console.log("Karaoke Player exists, Destroying it!"); window.cleanupVideoPlayer(); }
+		if (window.karaokePlayerInstance) { karaokeplayerdisabled = true; console.log("Karaoke Player exists, Destroying it!"); window.cleanupVideoPlayer(); }
 	  // If YouTube Player exists, Destroy it!
-		if (window.playlistPlayerInstance) { console.log("YouTube Player exists, Destroying it!"); window.cleanupVideoPlayer(); }
+		if (window.playlistPlayerInstance) { ytplayerdisabled = true; console.log("YouTube Player exists, Destroying it!"); window.cleanupVideoPlayer(); }
    setTimeout(() => { 
 		if (screenstuffDisabled){
 			screenstuffDisabled = false;
@@ -126,15 +127,13 @@ function enableTheFireScreen() {
 	console.log("Screen Stuff enabled: " + screenstuffDisabled);
 };
 
-// Karaoke Player Toggle
-let karaokeplayerdisabled = true;
   async function enableKaraokePlayer() {
 	  // If Browser already exists, DESTROY IT!
 	  var browser = await BS.BanterScene.GetInstance().Find('MainParentObject2');
 	  if (browser) { console.log("Browser2 Found, Removing it!"); browser.Destroy(); screenstuffDisabled = true; }
 	  // If YouTube Player exists, Destroy it!
 	  let delayYT = false;
-		if (window.playlistPlayerInstance) { delayYT = true; console.log("YouTube Player exists, Destroying it!"); window.cleanupVideoPlayer(); }
+		if (window.playlistPlayerInstance) { delayYT = true; ytplayerdisabled = true; console.log("YouTube Player exists, Destroying it!"); window.cleanupVideoPlayer(); }
   if (karaokeplayerdisabled){
 		setTimeout(() => {  
 			console.log("karaoke player enabling");
