@@ -115,7 +115,7 @@ function enableTheFireScreen() {
 			document.querySelector("a-scene").appendChild(firescreen);
 			if (websiteurl.includes("hyperbeam.com/i/")) {
 				setTimeout(async () => { 
-					let theBrowserthingy = await cannascene.Find(`MyBrowser2`);
+					let theBrowserthingy = await BS.BanterScene.GetInstance().Find(`MyBrowser2`);
 					let thebrowserpart = theBrowserthingy.GetComponent(BS.ComponentType.BanterBrowser);
 					thebrowserpart.RunActions(JSON.stringify({"actions": [{ "actionType": "runscript","strparam1": "const checkbox = document.querySelector(`.p-checkbox-box[role='checkbox']`); const joinButton = document.querySelector('.footer_3Yiou .joinBtn_1TAU6'); if (checkbox) checkbox.click(); if (joinButton) { const observer = new MutationObserver(() => { if (!joinButton.classList.contains('p-disabled')) { joinButton.click(); observer.disconnect(); setTimeout(() => { const skipButton = document.querySelector('.dialog-secondary-btn'); if (skipButton) skipButton.click(); }, 3000); } }); observer.observe(joinButton, { attributes: true, attributeFilter: ['class'] }); }" }]}));
 					setTimeout(async () => {
