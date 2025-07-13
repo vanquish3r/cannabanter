@@ -166,6 +166,7 @@ function enableTheFireScreen() {
 			videoplayer.setAttribute("data-mute-icon-url", "https://vanquish3r.github.io/cannabanter/images/Vol_Mute_Off.png");
 			videoplayer.setAttribute("data-skip-forward-icon-url", "https://vanquish3r.github.io/cannabanter/images/Sync_FW.png");
 			videoplayer.setAttribute("data-skip-backward-icon-url", "https://vanquish3r.github.io/cannabanter/images/Sync_Bk.png");
+			videoplayer.setAttribute("src", "https://vidya.firer.at/karaoke.js"); //  firer.at / sdq.st / https://best-v-player.glitch.me/karaoke.js
 			document.querySelector("a-scene").appendChild(videoplayer);
 		}, delayYT ? 2000 : 0);
   } else {console.log("enable karaoke player called");}
