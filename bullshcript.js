@@ -149,7 +149,7 @@ function enableTheFireScreen() {
 			videoplayer.setAttribute("button-position", "-2.8 6.5775 15.3"); // -2.815
 			videoplayer.setAttribute("volume", "15");
 			videoplayer.setAttribute("button-rotation", "0 90 0");
-			videoplayer.setAttribute("button-scale", "1 1 1");
+			videoplayer.setAttribute("button-scale", "1.5 1.5 1.5");
 			videoplayer.setAttribute("singer-button-position", "0 -50 0");
 			videoplayer.setAttribute("singer-button-rotation", "0 0 0");
 			// videoplayer.setAttribute("singer-button-scale", "1.5 1.5 1.5");
