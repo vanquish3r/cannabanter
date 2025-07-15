@@ -174,7 +174,7 @@ function enableTheFireScreen() {
 
 // Fire Tablet
 let screenPortableDisabled = true;
-function enableThePortableFireScreen() {
+function enableThePortableFireScreen(announce = true) {
   if (screenPortableDisabled){ screenPortableDisabled = false;
   //  setTimeout(() => { 
 	console.log("Adding Fire Tablet");
@@ -187,9 +187,9 @@ function enableThePortableFireScreen() {
 	firescreen.setAttribute("pixelsperunit", "1300");
 	firescreen.setAttribute("width", "1280");
 	firescreen.setAttribute("height", "720");
-	firescreen.setAttribute("announce", "true");
-	firescreen.setAttribute("announce-events", "true");
-  	firescreen.setAttribute("announce-420", "true");
+	firescreen.setAttribute("announce", announce);
+	firescreen.setAttribute("announce-events", announce);
+  	firescreen.setAttribute("announce-420", announce);
 	firescreen.setAttribute("volume", "0.25");
   	firescreen.setAttribute("backdrop", "true");
 	firescreen.setAttribute("hand-controls", "true");
