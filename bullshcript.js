@@ -253,3 +253,64 @@ document.addEventListener('CustomButtonClick', async function(event) {
      // console.log('An unknown button triggered the custom event.');
   }
 });
+
+/////////////// HOLOGRAMS AGAINST HUMANITY LOADER STUFF ///////////////
+async function injectHologramScript() {
+  const scriptUrl = "https://hah.firer.at/script.js?position=0 6.09 15.3&rotation=0 0 0&debug=true&instance=example1&deck=main";
+
+  try {
+    // 1. "Warm-up" request: Ping the server to wake it up.
+    console.log("Waking up the server... ☕");
+    // We use { method: 'HEAD' } to be more efficient.
+    // We only need to know the server is awake, not download the whole script yet.
+    await fetch(scriptUrl, { method: 'HEAD', mode: 'no-cors' });
+    console.log("Server is awake! Injecting script...");
+
+    // 2. Inject the script now that the server is ready.
+    const hah = document.createElement("script");
+    hah.id = "holograms";
+    hah.setAttribute("src", scriptUrl);
+    document.body.appendChild(hah);
+
+    hah.onload = () => { console.log("Hologram script loaded successfully!"); };
+    hah.onerror = () => { console.error("Failed to load the hologram script."); };
+
+  } catch (error) {
+    // The fetch itself might fail, though 'no-cors' mode often prevents this.
+    // The real check is the script's onerror handler.
+    console.error("The warm-up request failed. The script might not load.", error);
+  }
+}
+
+async function somerandomStartActions() {
+	const thisscene = BS.BanterScene.GetInstance();
+	const waitingForUnity = async () => { while (!thisscene.unityLoaded) { await new Promise(resolve => setTimeout(resolve, 500)); } };
+	await waitingForUnity(); console.log("BS: Unity-Loaded");
+	setTimeout(() => { 
+		//// Button Creator ///
+		async function createButton(name, butPosition, buttonImage = null, posterLink, localRotation = new BS.Vector3(0,0,0), localScale = new BS.Vector3(1, 1, 1), width = 1, height = 1) {
+			const buttonObject = await new BS.GameObject(`Button_${name}`).Async(); // Create the Object and give it a name
+			await buttonObject.AddComponent(new BS.BanterGeometry(BS.GeometryType.PlaneGeometry, 0, width, height)); // add geometry to the object
+			await buttonObject.AddComponent(new BS.BanterMaterial('Unlit/Diffuse', buttonImage, new BS.Vector4(1, 1, 1, 1))); // Set the Shader (Unlit/Diffuse) and the Color (0.1, 0.1, 0.1, 0.7) 0.7 being the alpha / transparency 
+			const buttonTransform = await buttonObject.AddComponent(new BS.Transform()); // Add a transform component so you can move and transform the object
+			await buttonObject.AddComponent(new BS.MeshCollider(true)); // Add a mesh Collider for the clicking to work
+			buttonObject.SetLayer(5); // Set the object to UI Layer 5 so it can be clicked
+
+			buttonTransform.position = butPosition; // Set the Position of the object
+			buttonTransform.localScale = localScale; // Set the Scale of the object
+			buttonTransform.localEulerAngles = localRotation; // Set the Scale of the object
+
+				buttonObject.On('click', () => {
+					console.log(`Button clicked!`);
+					injectHologramScript();
+					buttonObject.Destroy();
+					// openPage(posterLink);
+				});
+		}
+			// NAME // Button Position // posterImage // localRotation // Scale // Width // Height
+  		createButton('Test01', new BS.Vector3(-2.8,6.2,-17.19), 'https://openclipart.org/image/800px/17880', 'https://firer.at/', new BS.Vector3(0,-90,0), new BS.Vector3(0.3, 0.3, 1), 2, 1 );
+
+	}, 3000);
+};
+
+somerandomStartActions();
