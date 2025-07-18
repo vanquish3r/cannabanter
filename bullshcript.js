@@ -34,58 +34,83 @@ BS.BanterScene.GetInstance().On("loaded", () => {
 		// enableThePortableFireScreen();
 });
 
-// Player Toggle's by HBR & FireRat
+// Player Toggle's by FireRat
 let ytplayerdisabled = true;
 let karaokeplayerdisabled = true;
 let screenstuffDisabled = true;
 
-  async function enableYouTube() {
-	  // If Browser already exists, DESTROY IT!
-	  var browser = await BS.BanterScene.GetInstance().Find('MainParentObject2');
-	  if (browser) { console.log("Browser2 Found, Removing it!"); cleanupFireScreenV2(2); screenstuffDisabled = true; }
-	  // If Karaoke Player exists, Destroy it!
-	  let delayYT = false;
-		if (window.karaokePlayerInstance) { delayYT = true; karaokeplayerdisabled = true; console.log("Karaoke Player exists, Destroying it!"); window.cleanupVideoPlayer(); }
-  if (ytplayerdisabled){ ytplayerdisabled = false;
+/////////////// RENDER SCRIPT LOADER STUFF ///////////////
+async function injectRenderScript(theScriptsURL, TheScriptsName = "UnNamed", attributes = {}, appendTo = document.body) {
+  const scriptUrl = theScriptsURL;
+  try { // 1. "Warm-up" request: Ping the server to wake it up.
+    console.log("Waking up the server...");
+    await fetch(scriptUrl, { method: 'HEAD', mode: 'no-cors' }); // We use { method: 'HEAD' } to be more efficient.
+    console.log("Server is awake! Injecting script..."); // We only need to know the server is awake, not download the whole script yet.
+    const script = document.createElement("script"); // 2. Inject the script now that the server is ready.
+    script.id = `${TheScriptsName}`;
+    script.setAttribute("src", scriptUrl); // Set the src attribute
+    Object.entries(attributes).forEach(([key, value]) => { script.setAttribute(key, value); }); // Set all custom attributes
+    appendTo.appendChild(script);
+    script.onload = () => { console.log(`${TheScriptsName} script loaded successfully!`); }; // Set up event handlers
+    script.onerror = () => { console.error(`Failed to load the ${TheScriptsName} script.`); };
+  } catch (error) { // The fetch itself might fail, though 'no-cors' mode often prevents this.
+    console.error("The warm-up request failed. The script might not load.", error); // The real check is the script's onerror handler.
+  }
+}
+
+async function enableYouTube() {
+	// If Browser already exists, DESTROY IT!
+	var browser = await BS.BanterScene.GetInstance().Find('MainParentObject2');
+	if (browser) { console.log("Browser2 Found, Removing it!"); cleanupFireScreenV2(2); screenstuffDisabled = true; }
+	// If Karaoke Player exists, Destroy it!
+	let delayYT = false;
+	if (window.karaokePlayerInstance) { delayYT = true; karaokeplayerdisabled = true; console.log("Karaoke Player exists, Destroying it!"); window.cleanupVideoPlayer(); }
+	if (ytplayerdisabled){ ytplayerdisabled = false;
 		setTimeout(() => {  
 			console.log("YouTube Player Loading");
-			const videoplayer = document.createElement("script");
-			videoplayer.id = "cannabanter-videoplayer";
-			videoplayer.setAttribute("scale", "1 1 1");
-			videoplayer.setAttribute("rotation", "0 0 0");
-			videoplayer.setAttribute("position", "0 -3 8");
-			videoplayer.setAttribute("hand-controls", "false");
-			videoplayer.setAttribute("button-position", "-0.15 1.159 30.156");
-			videoplayer.setAttribute("volume", "5");
-			videoplayer.setAttribute("button-rotation", "0 0 0");
-			videoplayer.setAttribute("button-scale", "0.3 0.3 0.3");
-			videoplayer.setAttribute("spatial", "false");
-			// videoplayer.setAttribute("spatial-min-distance", "1");
-			// videoplayer.setAttribute("spatial-max-distance", "500");
-			videoplayer.setAttribute("playlist", "PLZWiw-xxQ4SPDmADhvme7-pU2bx3s7nKX");
-			videoplayer.setAttribute("announce", "false");
-			videoplayer.setAttribute("instance", "cannabantervidyainstance");
-			videoplayer.setAttribute("announce-events", "false");
-			videoplayer.setAttribute("announce-four-twenty", "false");
-			videoplayer.setAttribute("data-playlist-icon-url", "https://vanquish3r.github.io/cannabanter/images/Playlist.png");
-			videoplayer.setAttribute("data-vol-up-icon-url", "https://vanquish3r.github.io/cannabanter/images/Vol_Up.png");
-			videoplayer.setAttribute("data-vol-down-icon-url", "https://vanquish3r.github.io/cannabanter/images/Vol_Dn.png");
-			videoplayer.setAttribute("data-mute-icon-url", "https://vanquish3r.github.io/cannabanter/images/Vol_Mute_Off.png");
-			videoplayer.setAttribute("data-skip-forward-icon-url", "https://vanquish3r.github.io/cannabanter/images/Sync_FW.png");
-			videoplayer.setAttribute("data-skip-backward-icon-url", "https://vanquish3r.github.io/cannabanter/images/Sync_Bk.png");
-			videoplayer.setAttribute("src", "https://vidya.firer.at/playlist.js"); // firer.at / sdq.st / https://best-v-player.glitch.me/playlist.js
-			document.querySelector("a-scene").appendChild(videoplayer);
+
+			const youtubeAttributes = {
+				"scale": "1 1 1",
+				"mip-maps": "0",
+				"rotation": "0 0 0",
+				"position": "0 -3 8",
+				"hand-controls": "false",
+				"button-position": "-0.15 1.159 30.156",
+				"volume": "5",
+				"button-rotation": "0 0 0",
+				"button-scale": "0.3 0.3 0.3",
+				"spatial": "false",
+				// "spatial-min-distance": "1",
+				// "spatial-max-distance": "1000",
+				"playlist": "PLZWiw-xxQ4SPDmADhvme7-pU2bx3s7nKX",
+				"announce": "false",
+				"instance": "cannabantervidyainstance",
+				"announce-events": "false",
+				"announce-four-twenty": "false",
+				"data-playlist-icon-url": "https://vanquish3r.github.io/cannabanter/images/Playlist.png",
+				"data-vol-up-icon-url": "https://vanquish3r.github.io/cannabanter/images/Vol_Up.png",
+				"data-vol-down-icon-url": "https://vanquish3r.github.io/cannabanter/images/Vol_Dn.png",
+				"data-mute-icon-url": "https://vanquish3r.github.io/cannabanter/images/Vol_Mute_Off.png",
+				"data-skip-forward-icon-url": "https://vanquish3r.github.io/cannabanter/images/Sync_FW.png",
+				"data-skip-backward-icon-url": "https://vanquish3r.github.io/cannabanter/images/Sync_Bk.png"
+			};
+
+			injectRenderScript(
+				"https://vidya.firer.at/playlist.js", // firer.at / sdq.st / best-v-player.glitch.me
+				"cannabanter-videoplayer", youtubeAttributes, document.querySelector("a-scene")
+			);
+
 		}, delayYT ? 2000 : 0);
   } else {console.log("YouTube Player Loading...");}
 };
 
 // Fire Screen Toggle
 function enableTheFireScreen() {
-	  // If Karaoke Player exists, Destroy it!
-		if (window.karaokePlayerInstance) { karaokeplayerdisabled = true; console.log("Karaoke Player exists, Destroying it!"); window.cleanupVideoPlayer(); }
-	  // If YouTube Player exists, Destroy it!
-		if (window.playlistPlayerInstance) { ytplayerdisabled = true; console.log("YouTube Player exists, Destroying it!"); window.cleanupVideoPlayer(); }
-   setTimeout(() => { 
+	// If Karaoke Player exists, Destroy it!
+	if (window.karaokePlayerInstance) { karaokeplayerdisabled = true; console.log("Karaoke Player exists, Destroying it!"); window.cleanupVideoPlayer(); }
+	// If YouTube Player exists, Destroy it!
+	if (window.playlistPlayerInstance) { ytplayerdisabled = true; console.log("YouTube Player exists, Destroying it!"); window.cleanupVideoPlayer(); }
+	setTimeout(() => { 
 		if (screenstuffDisabled){
 			screenstuffDisabled = false;
 			console.log("Adding Screen Cast");
@@ -124,50 +149,51 @@ function enableTheFireScreen() {
 				}, 500);
 			}
 		}
-   }, 3000); 
+	}, 3000); 
 	console.log("Screen Stuff enabled: " + screenstuffDisabled);
 };
 
-  async function enableKaraokePlayer() {
-	  // If Browser already exists, DESTROY IT!
-	  var browser = await BS.BanterScene.GetInstance().Find('MainParentObject2');
-	  if (browser) { console.log("Browser2 Found, Removing it!"); cleanupFireScreenV2(2); screenstuffDisabled = true; }
-	  // If YouTube Player exists, Destroy it!
-	  let delayYT = false;
-		if (window.playlistPlayerInstance) { delayYT = true; ytplayerdisabled = true; console.log("YouTube Player exists, Destroying it!"); window.cleanupVideoPlayer(); }
-  if (karaokeplayerdisabled){
+async function enableKaraokePlayer() {
+	// If Browser already exists, DESTROY IT!
+	var browser = await BS.BanterScene.GetInstance().Find('MainParentObject2');
+	if (browser) { console.log("Browser2 Found, Removing it!"); cleanupFireScreenV2(2); screenstuffDisabled = true; }
+	// If YouTube Player exists, Destroy it!
+	let delayYT = false;
+	if (window.playlistPlayerInstance) { delayYT = true; ytplayerdisabled = true; console.log("YouTube Player exists, Destroying it!"); window.cleanupVideoPlayer(); }
+  if (karaokeplayerdisabled){ karaokeplayerdisabled = false;
 		setTimeout(() => {  
 			console.log("karaoke player enabling");
-			karaokeplayerdisabled = false;
-			const videoplayer = document.createElement("script");
-			videoplayer.id = "cannabanter-karaokeplayer";
-			videoplayer.setAttribute("scale", "1 1 1");
-			videoplayer.setAttribute("mip-maps", "0");
-			videoplayer.setAttribute("rotation", "0 0 0");
-			videoplayer.setAttribute("position", "0 -3 8");
-			videoplayer.setAttribute("hand-controls", "true");
-			videoplayer.setAttribute("button-position", "-2.8 6.5775 15.3"); // -2.815
-			videoplayer.setAttribute("volume", "15");
-			videoplayer.setAttribute("button-rotation", "0 90 0");
-			videoplayer.setAttribute("button-scale", "1.5 1.5 1.5");
-			videoplayer.setAttribute("singer-button-position", "0 -50 0");
-			videoplayer.setAttribute("singer-button-rotation", "0 0 0");
-			// videoplayer.setAttribute("singer-button-scale", "1.5 1.5 1.5");
-			videoplayer.setAttribute("spatial", "false");
-			// videoplayer.setAttribute("spatial-min-distance", "1");
-			// videoplayer.setAttribute("spatial-max-distance", "1000");
-			videoplayer.setAttribute("playlist", "");
-			videoplayer.setAttribute("announce", "false");
-			videoplayer.setAttribute("announce-events", "false");
-			videoplayer.setAttribute("announce-four-twenty", "false");
-			videoplayer.setAttribute("data-playlist-icon-url", "https://vanquish3r.github.io/cannabanter/images/Playlist.png");
-			videoplayer.setAttribute("data-vol-up-icon-url", "https://vanquish3r.github.io/cannabanter/images/Vol_Up.png");
-			videoplayer.setAttribute("data-vol-down-icon-url", "https://vanquish3r.github.io/cannabanter/images/Vol_Dn.png");
-			videoplayer.setAttribute("data-mute-icon-url", "https://vanquish3r.github.io/cannabanter/images/Vol_Mute_Off.png");
-			videoplayer.setAttribute("data-skip-forward-icon-url", "https://vanquish3r.github.io/cannabanter/images/Sync_FW.png");
-			videoplayer.setAttribute("data-skip-backward-icon-url", "https://vanquish3r.github.io/cannabanter/images/Sync_Bk.png");
-			videoplayer.setAttribute("src", "https://vidya.firer.at/karaoke.js"); //  firer.at / sdq.st / https://best-v-player.glitch.me/karaoke.js
-			document.querySelector("a-scene").appendChild(videoplayer);
+			const karaokeAttributes = {
+				"scale": "1 1 1",
+				"mip-maps": "0",
+				"rotation": "0 0 0",
+				"position": "0 -3 8",
+				"hand-controls": "true",
+				"button-position": "-2.8 6.5775 15.3", // -2.815
+				"volume": "15",
+				"button-rotation": "0 90 0",
+				"button-scale": "1.5 1.5 1.5",
+				"singer-button-position": "0 -50 0",
+				"singer-button-rotation": "0 0 0",
+				// "singer-button-scale": "1.5 1.5 1.5",
+				"spatial": "false",
+				// "spatial-min-distance": "1",
+				// "spatial-max-distance": "1000",
+				"playlist": "",
+				"announce": "false",
+				"announce-events": "false",
+				"announce-four-twenty": "false",
+				"data-playlist-icon-url": "https://vanquish3r.github.io/cannabanter/images/Playlist.png",
+				"data-vol-up-icon-url": "https://vanquish3r.github.io/cannabanter/images/Vol_Up.png",
+				"data-vol-down-icon-url": "https://vanquish3r.github.io/cannabanter/images/Vol_Dn.png",
+				"data-mute-icon-url": "https://vanquish3r.github.io/cannabanter/images/Vol_Mute_Off.png",
+				"data-skip-forward-icon-url": "https://vanquish3r.github.io/cannabanter/images/Sync_FW.png",
+				"data-skip-backward-icon-url": "https://vanquish3r.github.io/cannabanter/images/Sync_Bk.png"
+			};
+			injectRenderScript(
+				"https://vidya.firer.at/karaoke.js", // firer.at / sdq.st / best-v-player.glitch.me
+				"cannabanter-karaokeplayer", karaokeAttributes, document.querySelector("a-scene")
+			);
 		}, delayYT ? 2000 : 0);
   } else {console.log("enable karaoke player called");}
 };
@@ -176,112 +202,69 @@ function enableTheFireScreen() {
 let screenPortableDisabled = true;
 function enableThePortableFireScreen(announce = true) {
   if (screenPortableDisabled){ screenPortableDisabled = false;
-  //  setTimeout(() => { 
-	console.log("Adding Fire Tablet");
-	const firescreen = document.createElement("script");
-	firescreen.id = "cannabanter-firetablet";
-	firescreen.setAttribute("scale", "0.8 0.8 1");
-	firescreen.setAttribute("rotation", "0 0 0");
-	firescreen.setAttribute("position", "-3.131 7.5 -15.3");
-	firescreen.setAttribute("mipmaps", "0");
-	firescreen.setAttribute("pixelsperunit", "1300");
-	firescreen.setAttribute("width", "1280");
-	firescreen.setAttribute("height", "720");
-	firescreen.setAttribute("announce", announce);
-	firescreen.setAttribute("announce-events", announce);
-  	firescreen.setAttribute("announce-420", announce);
-	firescreen.setAttribute("volume", "0.25");
-  	firescreen.setAttribute("backdrop", "true");
-	firescreen.setAttribute("hand-controls", "true");
-  	// firescreen.setAttribute("disable-rotation", "false");
-	firescreen.setAttribute("custom-button01-url", "https://jackbox.tv");
-	firescreen.setAttribute("custom-button01-text", "Jackbox.tv");
-	firescreen.setAttribute("custom-button02-url", "https://papas.tv");
-	firescreen.setAttribute("custom-button02-text", "Papas.tv");
-	firescreen.setAttribute("custom-button03-url", "https://songpop-party.com/join");
-	firescreen.setAttribute("custom-button03-text", "SongPop Party");	   
-	firescreen.setAttribute("custom-button04-url", "https://firer.at/pages/scuffeduno.html");
-	firescreen.setAttribute("custom-button04-text", "ScuffedUNO");
-	firescreen.setAttribute("website", otherwebsiteurl);
-	firescreen.setAttribute("src", "https://firer.at/scripts/firescreenv2.js");
-	document.querySelector("a-scene").appendChild(firescreen);
-  //  }, 1000); 
+		//  setTimeout(() => { 
+		console.log("Adding Fire Tablet");
+		const firescreen = document.createElement("script");
+		firescreen.id = "cannabanter-firetablet";
+		firescreen.setAttribute("scale", "0.8 0.8 1");
+		firescreen.setAttribute("rotation", "0 0 0");
+		firescreen.setAttribute("position", "-3.131 7.5 -15.3");
+		firescreen.setAttribute("mipmaps", "0");
+		firescreen.setAttribute("pixelsperunit", "1300");
+		firescreen.setAttribute("width", "1280");
+		firescreen.setAttribute("height", "720");
+		firescreen.setAttribute("announce", announce);
+		firescreen.setAttribute("announce-events", announce);
+		firescreen.setAttribute("announce-420", announce);
+		firescreen.setAttribute("volume", "0.25");
+		firescreen.setAttribute("backdrop", "true");
+		firescreen.setAttribute("hand-controls", "true");
+		// firescreen.setAttribute("disable-rotation", "false");
+		firescreen.setAttribute("custom-button01-url", "https://jackbox.tv");
+		firescreen.setAttribute("custom-button01-text", "Jackbox.tv");
+		firescreen.setAttribute("custom-button02-url", "https://papas.tv");
+		firescreen.setAttribute("custom-button02-text", "Papas.tv");
+		firescreen.setAttribute("custom-button03-url", "https://songpop-party.com/join");
+		firescreen.setAttribute("custom-button03-text", "SongPop Party");	   
+		firescreen.setAttribute("custom-button04-url", "https://firer.at/pages/scuffeduno.html");
+		firescreen.setAttribute("custom-button04-text", "ScuffedUNO");
+		firescreen.setAttribute("website", otherwebsiteurl);
+		firescreen.setAttribute("src", "https://firer.at/scripts/firescreenv2.js");
+		document.querySelector("a-scene").appendChild(firescreen);
+		//  }, 1000); 
   }
     console.log("Fire Tablet enabled");
-
 };
 
 // BobCast Home Button Auto Play
 document.addEventListener('CustomButtonClick', async function(event) {
- // console.log('--- 1 Detected a Button Click event in another script! ---');
- // console.log('Button Name:', event.detail.buttonName);
- // console.log('Detail:', event.detail);
- // console.log('Message:', event.detail.message);
- // console.log('Timestamp:', event.detail.timestamp);
+ // console.log('--- 1 Detected a Button Click event in another script! ---'); console.log('Button Name:', event.detail.buttonName);
+ // console.log('Detail:', event.detail); console.log('Message:', event.detail.message); console.log('Timestamp:', event.detail.timestamp);
   switch (event.detail.buttonName) {
     case 'Home':
      // console.log('Handling action for: Primary Action Button HOME HOME');
       if (String(event.detail.message).includes("embed/video")) {
       // console.log('HOME IS watch.owncast.online');
         setTimeout(async () => { 
-          (await BS.BanterScene.GetInstance().Find(`MyBrowser1`)).GetComponent(BS.ComponentType.BanterBrowser).RunActions(JSON.stringify({
-          actions: [
-            {
-              actionType: "runscript",
-              strparam1: `document.querySelector('[title="Play Video"]').click();`
-            },
-            {
-              actionType: "keypress",
-              strparam1: "f"
-            }
-          ]
-        }));
+          (await BS.BanterScene.GetInstance().Find(`MyBrowser1`)).GetComponent(BS.ComponentType.BanterBrowser).RunActions(JSON.stringify({ actions: [
+            { actionType: "runscript", strparam1: `document.querySelector('[title="Play Video"]').click();` },
+            { actionType: "keypress", strparam1: "f" } ]
+        	}));
         }, 2000);
-      } else {
-       // console.log(`HOME IS NOT watch.owncast.online`, event.detail.message);
+      } else { // console.log(`HOME IS NOT watch.owncast.online`, event.detail.message);
       };
       break;
     case 'Info':
-     // console.log('Handling action for: More Info Button');
-      // Do something specific for button 2
+     // console.log('Handling action for: More Info Button'); // Do something specific for button 2
       break;
     case 'Google':
-     // console.log('Handling action for: Google Button');
-      // Do something specific for button 3
+     // console.log('Handling action for: Google Button'); // Do something specific for button 3
       break;
     default:
      // console.log('An unknown button triggered the custom event.');
   }
 });
-
-/////////////// HOLOGRAMS AGAINST HUMANITY LOADER STUFF ///////////////
-async function injectHologramScript() {
-  const scriptUrl = "https://hah.firer.at/script.js?position=0 6.09 15.3&rotation=0 0 0&debug=true&instance=example1&deck=main";
-
-  try {
-    // 1. "Warm-up" request: Ping the server to wake it up.
-    console.log("Waking up the server... ☕");
-    // We use { method: 'HEAD' } to be more efficient.
-    // We only need to know the server is awake, not download the whole script yet.
-    await fetch(scriptUrl, { method: 'HEAD', mode: 'no-cors' });
-    console.log("Server is awake! Injecting script...");
-
-    // 2. Inject the script now that the server is ready.
-    const hah = document.createElement("script");
-    hah.id = "holograms";
-    hah.setAttribute("src", scriptUrl);
-    document.body.appendChild(hah);
-
-    hah.onload = () => { console.log("Hologram script loaded successfully!"); };
-    hah.onerror = () => { console.error("Failed to load the hologram script."); };
-
-  } catch (error) {
-    // The fetch itself might fail, though 'no-cors' mode often prevents this.
-    // The real check is the script's onerror handler.
-    console.error("The warm-up request failed. The script might not load.", error);
-  }
-}
-
+/// Hologram Button Click Me Stuff ////
 async function somerandomStartActions() {
 	const thisscene = BS.BanterScene.GetInstance();
 	const waitingForUnity = async () => { while (!thisscene.unityLoaded) { await new Promise(resolve => setTimeout(resolve, 500)); } };
@@ -302,7 +285,7 @@ async function somerandomStartActions() {
 
 				buttonObject.On('click', () => {
 					console.log(`Button clicked!`);
-					injectHologramScript();
+					injectRenderScript("https://hah.firer.at/script.js?position=0 6.09 15.3&rotation=0 0 0&debug=true&instance=example1&deck=main", "Holograms");
 					buttonObject.Destroy();
 					// openPage(posterLink);
 				});
