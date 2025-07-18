@@ -114,29 +114,32 @@ function enableTheFireScreen() {
 		if (screenstuffDisabled){
 			screenstuffDisabled = false;
 			console.log("Adding Screen Cast");
+			const firescreenAttributes = {
+				"scale": "1 1 1",
+				"mipmaps": "0",
+				"rotation": "0 180 0",
+				"screen-rotation": "0 180 0",
+				"screen-scale": "0.515 0.515 1",
+				"position": "0 0.1 -29",
+				"lock-position": "true",
+				"hand-controls": "false",
+				"pixelsperunit": "1600",
+				"castmode": "true",
+				"backdrop": "false",
+				"disable-rotation": "true",
+				"announce": "false",
+				"announce-events": "false",
+				"announce-420": "false",
+				"volume": "0.2",
+				"width": "1920",
+				"height": "1080",
+				"screen-position": "0 -3.1 -21",
+				"website": websiteurl
+			};
 			const firescreen = document.createElement("script");
 			firescreen.id = "cannabanter-firescreen";
-			firescreen.setAttribute("scale", "1 1 1");
-			firescreen.setAttribute("rotation", "0 180 0");
-			firescreen.setAttribute("screen-rotation", "0 180 0");
-			firescreen.setAttribute("screen-scale", "0.515 0.515 1");
-			firescreen.setAttribute("position", "0 0.1 -29");
-			firescreen.setAttribute("lock-position", "true");
-			firescreen.setAttribute("mipmaps", "0");
-			firescreen.setAttribute("pixelsperunit", "1600");
-			firescreen.setAttribute("castmode", "true");
-			firescreen.setAttribute("backdrop", "false");
-			firescreen.setAttribute("disable-rotation", "true");
-			firescreen.setAttribute("hand-controls", "false");
-			firescreen.setAttribute("announce", "false");
-			firescreen.setAttribute("announce-events", "false");
-			firescreen.setAttribute("announce-420", "false");
-			firescreen.setAttribute("volume", "0.2");
-			firescreen.setAttribute("width", "1920");
-			firescreen.setAttribute("height", "1080");
-			firescreen.setAttribute("screen-position", "0 -3.1 -21");
-			firescreen.setAttribute("website", websiteurl);
 			firescreen.setAttribute("src", "https://firer.at/scripts/firescreenv2.js");
+			Object.entries(firescreenAttributes).forEach(([key, value]) => { firescreen.setAttribute(key, value); });
 			document.querySelector("a-scene").appendChild(firescreen);
 			if (websiteurl.includes("hyperbeam.com/i/")) {
 				setTimeout(async () => { 
@@ -202,38 +205,37 @@ async function enableKaraokePlayer() {
 let screenPortableDisabled = true;
 function enableThePortableFireScreen(announce = true) {
   if (screenPortableDisabled){ screenPortableDisabled = false;
-		//  setTimeout(() => { 
 		console.log("Adding Fire Tablet");
+		const firescreenAttributes = {
+			"scale": "0.8 0.8 1",
+			"mipmaps": "0",
+			"rotation": "0 0 0",
+			"position": "-3.131 7.5 -15.3",
+			"pixelsperunit": "1300",
+			"width": "1280",
+			"height": "720",
+			"announce": announce,
+			"announce-events": announce,
+			"announce-420": announce,
+			"volume": "0.25",
+			"backdrop": "true",
+			"hand-controls": "true",
+			"custom-button01-url": "https://jackbox.tv",
+			"custom-button01-text": "Jackbox.tv",
+			"custom-button02-url": "https://papas.tv",
+			"custom-button02-text": "Papas.tv",
+			"custom-button03-url": "https://songpop-party.com/join",
+			"custom-button03-text": "SongPop Party",	   
+			"custom-button04-url": "https://firer.at/pages/scuffeduno.html",
+			"custom-button04-text": "ScuffedUNO",
+			"website": otherwebsiteurl
+		};
 		const firescreen = document.createElement("script");
 		firescreen.id = "cannabanter-firetablet";
-		firescreen.setAttribute("scale", "0.8 0.8 1");
-		firescreen.setAttribute("rotation", "0 0 0");
-		firescreen.setAttribute("position", "-3.131 7.5 -15.3");
-		firescreen.setAttribute("mipmaps", "0");
-		firescreen.setAttribute("pixelsperunit", "1300");
-		firescreen.setAttribute("width", "1280");
-		firescreen.setAttribute("height", "720");
-		firescreen.setAttribute("announce", announce);
-		firescreen.setAttribute("announce-events", announce);
-		firescreen.setAttribute("announce-420", announce);
-		firescreen.setAttribute("volume", "0.25");
-		firescreen.setAttribute("backdrop", "true");
-		firescreen.setAttribute("hand-controls", "true");
-		// firescreen.setAttribute("disable-rotation", "false");
-		firescreen.setAttribute("custom-button01-url", "https://jackbox.tv");
-		firescreen.setAttribute("custom-button01-text", "Jackbox.tv");
-		firescreen.setAttribute("custom-button02-url", "https://papas.tv");
-		firescreen.setAttribute("custom-button02-text", "Papas.tv");
-		firescreen.setAttribute("custom-button03-url", "https://songpop-party.com/join");
-		firescreen.setAttribute("custom-button03-text", "SongPop Party");	   
-		firescreen.setAttribute("custom-button04-url", "https://firer.at/pages/scuffeduno.html");
-		firescreen.setAttribute("custom-button04-text", "ScuffedUNO");
-		firescreen.setAttribute("website", otherwebsiteurl);
 		firescreen.setAttribute("src", "https://firer.at/scripts/firescreenv2.js");
+		Object.entries(firescreenAttributes).forEach(([key, value]) => { firescreen.setAttribute(key, value); });
 		document.querySelector("a-scene").appendChild(firescreen);
-		//  }, 1000); 
-  }
-    console.log("Fire Tablet enabled");
+  }; console.log("Fire Tablet enabled");
 };
 
 // BobCast Home Button Auto Play
@@ -278,21 +280,18 @@ async function somerandomStartActions() {
 			const buttonTransform = await buttonObject.AddComponent(new BS.Transform()); // Add a transform component so you can move and transform the object
 			await buttonObject.AddComponent(new BS.MeshCollider(true)); // Add a mesh Collider for the clicking to work
 			buttonObject.SetLayer(5); // Set the object to UI Layer 5 so it can be clicked
-
 			buttonTransform.position = butPosition; // Set the Position of the object
 			buttonTransform.localScale = localScale; // Set the Scale of the object
 			buttonTransform.localEulerAngles = localRotation; // Set the Scale of the object
-
-				buttonObject.On('click', () => {
-					console.log(`Button clicked!`);
-					injectRenderScript("https://hah.firer.at/script.js?position=0 6.09 15.3&rotation=0 0 0&debug=true&instance=example1&deck=main", "Holograms");
-					buttonObject.Destroy();
-					// openPage(posterLink);
-				});
+			buttonObject.On('click', () => {
+				console.log(`Button clicked!`);
+				injectRenderScript("https://hah.firer.at/script.js?position=0 6.09 15.3&rotation=0 0 0&debug=true&instance=example1&deck=main", "Holograms");
+				buttonObject.Destroy();
+				// openPage(posterLink);
+			});
 		}
 			// NAME // Button Position // posterImage // localRotation // Scale // Width // Height
   		createButton('Test01', new BS.Vector3(-2.8,6.2,-17.19), 'https://openclipart.org/image/800px/17880', 'https://firer.at/', new BS.Vector3(0,-90,0), new BS.Vector3(0.3, 0.3, 1), 2, 1 );
-
 	}, 3000);
 };
 
