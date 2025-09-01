@@ -96,7 +96,7 @@ async function enableYouTube() {
 			};
 
 			injectRenderScript(
-				"https://vidya.sdq.st.at/playlist.js", // firer.at / sdq.st / best-v-player.glitch.me
+				"https://vidya.sdq.st/playlist.js", // firer.at / sdq.st / best-v-player.glitch.me
 				"cannabanter-videoplayer", youtubeAttributes, document.querySelector("a-scene")
 			);
 
