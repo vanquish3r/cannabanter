@@ -96,7 +96,7 @@ async function enableYouTube() {
 			};
 
 			injectRenderScript(
-				"https://vidya.firer.at/playlist.js", // firer.at / sdq.st / best-v-player.glitch.me
+				"https://vidya.sdq.st.at/playlist.js", // firer.at / sdq.st / best-v-player.glitch.me
 				"cannabanter-videoplayer", youtubeAttributes, document.querySelector("a-scene")
 			);
 
@@ -194,7 +194,7 @@ async function enableKaraokePlayer() {
 				"data-skip-backward-icon-url": "https://vanquish3r.github.io/cannabanter/images/Sync_Bk.png"
 			};
 			injectRenderScript(
-				"https://vidya.firer.at/karaoke.js", // firer.at / sdq.st / best-v-player.glitch.me
+				"https://vidya.sdq.st/karaoke.js", // firer.at / sdq.st / best-v-player.glitch.me
 				"cannabanter-karaokeplayer", karaokeAttributes, document.querySelector("a-scene")
 			);
 		}, delayYT ? 2000 : 0);
