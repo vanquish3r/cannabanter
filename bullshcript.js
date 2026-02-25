@@ -32,7 +32,6 @@ window.addEventListener("bs-loaded", ()=> {
 		// enableKaraokePlayer();
 	/* UNCOMMENTED THIS TO ENABLE FIRE TABLET */
 		// enableThePortableFireScreen();
-});
 
 // Player Toggle's by FireRat
 let ytplayerdisabled = true;
@@ -296,3 +295,5 @@ async function somerandomStartActions() {
 };
 
 somerandomStartActions();
+	
+});
