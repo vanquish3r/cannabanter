@@ -268,8 +268,8 @@ document.addEventListener('CustomButtonClick', async function(event) {
 /// Hologram Button Click Me Stuff ////
 async function somerandomStartActions() {
 	const thisscene = BS.BanterScene.GetInstance();
-	const waitingForUnity = async () => { while (!thisscene.unityLoaded) { await new Promise(resolve => setTimeout(resolve, 500)); } };
-	await waitingForUnity(); console.log("BS: Unity-Loaded");
+	// const waitingForUnity = async () => { while (!thisscene.unityLoaded) { await new Promise(resolve => setTimeout(resolve, 500)); } };
+	// await waitingForUnity(); console.log("BS: Unity-Loaded");
 	setTimeout(() => { 
 		//// Button Creator ///
 		async function createButton(name, butPosition, buttonImage = null, posterLink, localRotation = new BS.Vector3(0,0,0), localScale = new BS.Vector3(1, 1, 1), width = 1, height = 1) {
