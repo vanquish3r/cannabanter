@@ -267,7 +267,8 @@ document.addEventListener('CustomButtonClick', async function(event) {
 });
 /// Hologram Button Click Me Stuff ////
 async function somerandomStartActions() {
-	const thisscene = BS.BanterScene.GetInstance();
+	window.addEventListener("unity-loaded", ()=> {
+	// const thisscene = BS.BanterScene.GetInstance();
 	// const waitingForUnity = async () => { while (!thisscene.unityLoaded) { await new Promise(resolve => setTimeout(resolve, 500)); } };
 	// await waitingForUnity(); console.log("BS: Unity-Loaded");
 	setTimeout(() => { 
@@ -292,6 +293,7 @@ async function somerandomStartActions() {
 			// NAME // Button Position // posterImage // localRotation // Scale // Width // Height
   		createButton('Test01', new BS.Vector3(-2.8,6.2,-17.19), 'https://openclipart.org/image/800px/17880', 'https://firer.at/', new BS.Vector3(0,-90,0), new BS.Vector3(0.3, 0.3, 1), 2, 1 );
 	}, 3000);
+	});
 };
 
 somerandomStartActions();
