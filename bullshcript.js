@@ -22,8 +22,8 @@ var websiteurl = "https://firer.at/pages/games.html"; // Fire Screen Placeholder
 // let websiteurl = "https://vanquish3r.github.io/cannabanter/embed.html?420" /* FOR YOUTUBE LIVE - Uncomment this & change youtubevideoID in line 13 in embed.html AND comment out the line below */
 // let websiteurl = "https://screen.sdq.st:8443/?room=cannabanter" /* FOR SCREENCAST - Uncomment this AND comment out the line above */
 
-window.addEventListener("bs-loaded", ()=> {
- 	console.log("Scene loaded");
+// window.addEventListener("bs-loaded", ()=> {
+ 	// console.log("Scene loaded");
 	/* UNCOMMENTED THIS TO ENABLE THE YOUTUBE PLAYER */
 		// enableYouTube();
 	/* UNCOMMENTED THIS TO ENABLE SCREEN CAST / YOUTUBE LIVE */
@@ -296,4 +296,4 @@ async function somerandomStartActions() {
 
 somerandomStartActions();
 	
-});
+// });
